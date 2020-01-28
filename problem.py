@@ -4,11 +4,11 @@ import pandas as pd
 import rampwf as rw
 from rampwf.workflows import FeatureExtractorRegressor
 from rampwf.score_types.base import BaseScoreType
-from sklearn.model_selection import GroupShuffleSplit
+from sklearn.model_selection import KFold
 
 
 problem_title = 'Prediction of the surface burned by wildfires in the south of France'
-_target_column_name = 'Surface parcourue (m2)'
+_target_column_name = 'Superficie'
 # A type (class) which will be used to create wrapper objects for y_pred
 Predictions = rw.prediction_types.make_regression()
 # An object implementing the workflow
@@ -16,7 +16,7 @@ Predictions = rw.prediction_types.make_regression()
 
 class WFA(FeatureExtractorRegressor):
     def __init__(self, workflow_element_names=[
-            'feature_extractor', 
+            'feature_extractor',
             'regressor']):  # TODO: Add helpful data
         super(WFA, self).__init__(workflow_element_names[:2])
         self.element_names = workflow_element_names
@@ -52,12 +52,12 @@ score_types = [
 
 
 def get_cv(X, y):
-    cv = GroupShuffleSplit(n_splits=8, test_size=0.20, random_state=42)
+    cv = KFold(n_splits=5, test_size=0.30, shuffle=False)
     return cv.split(X, y)
 
 
 def _read_data(path, f_name):
-    data = pd.read_csv(os.path.join(path, 'data', f_name), 
+    data = pd.read_csv(os.path.join(path, 'data', f_name),
                        low_memory=False,
                        compression='zip')  # TODO: Set right compression
     y_array = data[_target_column_name].values
