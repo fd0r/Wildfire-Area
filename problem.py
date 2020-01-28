@@ -66,10 +66,10 @@ def _read_data(path, f_name):
 
 
 def get_train_data(path='.'):
-    f_name = 'fires_TRAIN.csv.zip'
+    f_name = 'train.csv'
     return _read_data(path, f_name)
 
 
 def get_test_data(path='.'):
-    f_name = 'fires_TEST.csv.zip'
+    f_name = 'test.csv'
     return _read_data(path, f_name)
