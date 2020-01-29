@@ -21,7 +21,7 @@ You will need to install the ramp workflow library. If it is not already done, t
 ```
 pip install git+https://github.com/paris-saclay-cds/ramp-workflow.git
 ```
-Then, follow the [ramp-kits instruction](https://github.com/paris-saclay-cds/ramp-workflow/wiki/Getting-started-with-a-ramp-kit)
+Then, follow the [ramp-kits instruction](https://github.com/paris-saclay-cds/ramp-workflow/wiki/Getting-started-with-a-ramp-kit).
 
 ## Local submissions
 
