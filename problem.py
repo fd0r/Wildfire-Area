@@ -1,27 +1,29 @@
 import os
+
 import numpy as np
 import pandas as pd
 import rampwf as rw
-from rampwf.workflows import FeatureExtractorRegressor
 from rampwf.score_types.base import BaseScoreType
+from rampwf.workflows import FeatureExtractorRegressor
 from sklearn.model_selection import KFold
-
 
 problem_title = 'Prediction of the surface burned by wildfires in the south of France'
 _target_column_name = 'Superficie'
 # A type (class) which will be used to create wrapper objects for y_pred
 Predictions = rw.prediction_types.make_regression()
+
+
 # An object implementing the workflow
 
 
 class WFA(FeatureExtractorRegressor):
-    def __init__(self, workflow_element_names=[
-            'feature_extractor',
-            'regressor']):  # TODO: Add helpful data
+    def __init__(self, workflow_element_names=['feature_extractor', 'regressor']):  # TODO: Add helpful data
         super(WFA, self).__init__(workflow_element_names[:2])
         self.element_names = workflow_element_names
 
+
 workflow = WFA()
+
 
 # TODO: define the score (specific score for the WFA problem)
 
