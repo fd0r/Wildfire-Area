@@ -1,11 +1,16 @@
 import geopandas as gpd
 import pandas as pd
-from pyproj import Proj, transform
+import pyproj
+from pyproj import Proj
+from shapely.ops import transform
+from functools import partial
 
 def dfci_to_lambert(dfci):
     # Transforms a DFCI square coordinate to the Lambert zone II coordinates of its center
     # See http://ccffpeynier.free.fr/Files/dfci.pdf and http://geofree.fr/gf/projguess.asp
-    # for more information
+    # for more information about how Lambert II and DFCI coordinates work
+    # See https://www.promethee.com/doc/prom_donnees.pdf to see how DFCI coordinates are
+    # written in the fires data
     letters = 'ABCDEFGHKLMN'
 
     x_lambert = 0
@@ -45,7 +50,7 @@ def dfci_to_wgs(dfci):
     inProj = Proj('epsg:27572')
     outProj = Proj('epsg:4326')
     lamb_x,lamb_y = dfci_to_lambert(dfci1)
-    lat,lon = transform(inProj,outProj,lamb_x,lamb_y)
+    lat,lon = pyproj.transform(inProj,outProj,lamb_x,lamb_y)
     return (lat,lon)
 
 def reduce_forest_data(path_forests, path_fires, new_path, new_format='GeoJSON'):
@@ -59,3 +64,21 @@ def reduce_forest_data(path_forests, path_fires, new_path, new_format='GeoJSON')
     forests_of_interest = forests[forests['cinse_dep'].isin(dep_of_interest)]
 
     south_east_forests.to_file(new_path, driver=new_format)
+
+
+def compute_forest_area(forests_shapes):
+    # Compute the area in square meters for the forest shapes passed as argument
+    areas = []
+    proj = partial(pyproj.transform, Proj('epsg:4326'), Proj('epsg:3857'))
+    for shape in forests_shapes:
+        new_shape = transform(proj, shape)
+        areas.append(new_shape.area)
+    return areas
+
+def add_forest_areas(path_forests, new_path, new_format='GeoJSON'):
+    # Adds a column containing the forests areas and writes it in a new file
+    forests = gpd.read_file(path_forests)
+
+    forests['area'] = compute_forest_area(forests['geometry'])
+
+    forests.to_file(new_path, driver=new_format)

@@ -4,3 +4,6 @@ pandas
 scikit-learn>=0.20
 matplotlib
 jupyter
+pyproj
+geopandas
+shapely
