@@ -35,13 +35,16 @@ class WFA_error(BaseScoreType):
         self.precision = precision
 
     def __call__(self, y_true, y_pred):
+
         if isinstance(y_true, pd.Series):
             y_true = y_true.values
 
-        max_true = np.maximum(5., np.log10(np.maximum(1., y_true)))
-        max_pred = np.maximum(5., np.log10(np.maximum(1., y_pred)))
+        alpha = 0.7
+        p = 2
 
-        loss = np.mean(np.abs(max_true - max_pred))
+        losses = 2*(alpha+(1-2*alpha)*(1*((np.log(y_true)-np.log(y_pred)) < 0)))*((np.log(y_true)-np.log(y_pred))**p)
+
+        loss = np.mean(losses)
 
         return loss
 
