@@ -7,11 +7,13 @@ fires = pd.read_csv("data/fires.csv", skiprows=2, delimiter=";")
 
 ### Transform data
 
-fires.rename(columns={"Type de feu": "Type", "Code INSEE": "INSEE", "Code du carreau DFCI": "Carreau",
-                      "Origine de l'alerte": "Alerteur","Surface parcourue (m2)": "Superficie"},
+fires.rename(columns={"Année": "Year", "Numéro": "ID", "Type de feu": "Type", "Département": "Department",
+                      "Code INSEE": "INSEE_code", "Commune": "Town", "Lieu-dit": "Locality",
+                      "Code du carreau DFCI": "DFCI_coordinate", "Alerte": "Signal"
+                      "Origine de l'alerte": "Origin", "Surface parcourue (m2)": "Area"},
              inplace=True)
-fires['Alerte'] = pd.to_datetime(fires['Alerte'], format='%Y-%m-%d %H:%M:%S')
-fires.sort_values(['Alerte'], ascending=True, inplace=True)
+fires['Signal'] = pd.to_datetime(fires['Signal'], format='%Y-%m-%d %H:%M:%S')
+fires.sort_values(['Signal'], ascending=True, inplace=True)
 
 ### Split data
 

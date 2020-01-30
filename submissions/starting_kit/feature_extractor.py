@@ -48,7 +48,8 @@ class FeatureExtractor(object):
                 ('insee', make_pipeline(insee_transformer,SimpleImputer(strategy='median')), insee_col),
                 ('num', numeric_transformer, num_cols),
                 ('date', make_pipeline(date_transformer,SimpleImputer(strategy='median')), date_col),
-                SimpleImputer(strategy='median')), APE_col),
+                ('dep', make_pipeline(dep_transformer,SimpleImputer(strategy='median')), dep_col),
+                ('origine', make_pipeline(origine_transformer,SimpleImputer(strategy='median')), origine_col),
                 ])
 
         self.preprocessor = preprocessor
