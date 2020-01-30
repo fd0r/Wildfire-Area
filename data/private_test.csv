@@ -1,4 +1,4 @@
-Année,Numéro,Département,INSEE,Commune,Lieu-dit,Carreau,Alerte,Alerteur,Superficie
+Year,ID,Department,INSEE_code,Town,Locality,DFCI_coordinate,Signal,Origin,Area
 1993,74,06,06028,Caille,ADRET DE CAILLE,LD46G62,1993-02-05 19:04:00,3.0,40000.0
 1993,3689,13,13035,Eyguières,,KD04L94,1993-02-05 19:59:00,3.0,0.001
 1993,3352,05,05017,Bâtie-Neuve (La),LE COLLET,LE06E1,1993-02-05 22:43:00,3.0,0.001

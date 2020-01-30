@@ -15,33 +15,33 @@ class FeatureExtractor(object):
     def fit(self, X_df, y_array):
 
         def insee(X):
-            insee_nums = pd.to_numeric(X['INSEE'], errors='coerce')
+            insee_nums = pd.to_numeric(X['INSEE_code'], errors='coerce')
             return insee_nums.values[:, np.newaxis]
         insee_transformer = FunctionTransformer(insee, validate=False)
 
         def dep(X):
-            dep_nums = pd.to_numeric(X['Département'], errors='coerce')
+            dep_nums = pd.to_numeric(X['Department'], errors='coerce')
             return dep_nums.values[:, np.newaxis]
         dep_transformer = FunctionTransformer(dep, validate=False)
 
         def origine(X):
-            or_nums = pd.to_numeric(X['Alerteur'], errors='coerce')
+            or_nums = pd.to_numeric(X['Origin'], errors='coerce')
             return or_nums.values[:, np.newaxis]
         origine_transformer = FunctionTransformer(origine, validate=False)
 
         numeric_transformer = Pipeline(steps=[('impute', SimpleImputer(strategy='median'))])
 
         def process_date(X):
-            date = pd.to_datetime(X['Alerte'], format='%Y-%m-%d %H:%M:%S')
+            date = pd.to_datetime(X['Signal'], format='%Y-%m-%d %H:%M:%S')
             return np.c_[date.dt.year, date.dt.month, date.dt.day,
                          date.dt.hour, date.dt.minute, date.dt.second]
         date_transformer = FunctionTransformer(process_date, validate=False)
 
-        num_cols = ['Numéro', 'Année']
-        insee_col = ['INSEE']
-        date_col = ['Alerte']
-        dep_col = ['Département']
-        origine_col = ['Alerteur']
+        num_cols = ['ID', 'Year']
+        insee_col = ['INSEE_code']
+        date_col = ['Signal']
+        dep_col = ['Department']
+        origine_col = ['Origin']
 
         preprocessor = ColumnTransformer(
             transformers=[

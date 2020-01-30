@@ -8,7 +8,7 @@ from rampwf.workflows import FeatureExtractorRegressor
 from sklearn.model_selection import KFold
 
 problem_title = 'Prediction of the surface burned by wildfires in the south of France'
-_target_column_name = 'Superficie'
+_target_column_name = 'Area'
 # A type (class) which will be used to create wrapper objects for y_pred
 Predictions = rw.prediction_types.make_regression()
 
@@ -52,6 +52,9 @@ class WFA_error(BaseScoreType):
 
 score_types = [
     WFA_error(name='wfa error', precision=3),
+    rw.score_types.RMSE(name='RMSE'),
+    rw.score_types.RelativeRMSE(name='Relative RMSE'),
+    rw.score_types.NormalizedRMSE(name='Normalized RMSE'),
 ]
 
 
