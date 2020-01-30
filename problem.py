@@ -8,13 +8,12 @@ from rampwf.workflows import FeatureExtractorRegressor
 from sklearn.model_selection import KFold
 
 problem_title = 'Prediction of the surface burned by wildfires in the south of France'
-_target_column_name = 'Superficie'
+_target_column_name = 'Area'
 # A type (class) which will be used to create wrapper objects for y_pred
 Predictions = rw.prediction_types.make_regression()
 
 
 # An object implementing the workflow
-
 
 class WFA(FeatureExtractorRegressor):
     def __init__(self, workflow_element_names=['feature_extractor', 'regressor']):  # TODO: Add helpful data
@@ -53,18 +52,19 @@ class WFA_error(BaseScoreType):
 
 score_types = [
     WFA_error(name='wfa error', precision=3),
+    rw.score_types.RMSE(name='RMSE'),
+    rw.score_types.RelativeRMSE(name='Relative RMSE'),
+    rw.score_types.NormalizedRMSE(name='Normalized RMSE'),
 ]
 
 
 def get_cv(X, y):
-    cv = KFold(n_splits=5, test_size=0.30, shuffle=False)
+    cv = KFold(n_splits=5, shuffle=False)
     return cv.split(X, y)
 
 
 def _read_data(path, f_name):
-    data = pd.read_csv(os.path.join(path, 'data', f_name),
-                       low_memory=False,
-                       compression='zip')  # TODO: Set right compression
+    data = pd.read_csv(os.path.join(path, 'data', f_name))
     y_array = data[_target_column_name].values
     X_df = data.drop(_target_column_name, axis=1)
     return X_df, y_array
