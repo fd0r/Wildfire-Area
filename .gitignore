@@ -1,2 +1,10 @@
 .ipynb_checkpoints/
 .ipynb_checkpoints/*
+data/data_synop/
+data/donnees-synop-essentielles-omm.csv
+data/fires_with_meteo.csv
+data/fires_with_meteo_full_one.csv
+data/liste_incendies_ du_10_01_2020.csv
+data/synop_aglomerated.csv
+data/.DS_Store
+*.DS_Store
