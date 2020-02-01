@@ -12,8 +12,15 @@ This starting kit obviously requires python, but also needs some libraries:
 
 - pandas
 - numpy
+- scipy
 - matplotlib
 - scikit-learn
+- geopandas
+- shapely
+- jupyter
+- googledrivedownloader
+
+If you need to install some of them, you can simply execute ```pip install -r requirements.txt``` on your terminal.
 
 ## Environment
 
