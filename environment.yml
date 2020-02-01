@@ -8,5 +8,6 @@ dependencies:
   - matplotlib
   - scikit-learn>=0.20
   - jupyter
+  - googledrivedownloader
   - pip:
       - https://api.github.com/repos/paris-saclay-cds/ramp-workflow/zipball/master
