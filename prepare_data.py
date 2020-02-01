@@ -4,16 +4,18 @@ from sklearn.model_selection import train_test_split
 
 ### Load data
 
-fires = pd.read_csv("data/fires.csv", skiprows=2, delimiter=";")
+fires = pd.read_csv("data/fires.csv")
 
 ### Transform data
 
-fires.rename(columns={"Année": "Year", "Numéro": "ID", "Type de feu": "Type", "Département": "Department",
-                      "Code INSEE": "INSEE_code", "Commune": "Town", "Lieu-dit": "Locality",
-                      "Code du carreau DFCI": "DFCI_coordinate", "Alerte": "Signal",
-                      "Origine de l'alerte": "Origin", "Surface parcourue (m2)": "Area"},
-             inplace=True)
-fires.drop(['Type'], axis=1, inplace=True)
+#fires.rename(columns={"Année": "Year", "Numéro": "ID", "Type de feu": "Type", "Département": "Department",
+#                      "Code INSEE": "INSEE_code", "Commune": "Town", "Lieu-dit": "Locality",
+#                      "Code du carreau DFCI": "DFCI_coordinate", "Alerte": "Signal",
+#                      "Origine de l'alerte": "Origin", "Surface parcourue (m2)": "Area"},
+#             inplace=True)
+#fires.drop(['Type'], axis=1, inplace=True)
+fires.rename(columns={"Id": "ID"}, inplace=True)
+fires.drop(['Unnamed: 0'], axis=1, inplace=True)
 fires.loc[fires['Area']==0, 'Area'] = 0.001
 fires.loc[fires['Area'].isna(), 'Area'] = 0.001
 fires['Signal'] = pd.to_datetime(fires['Signal'], format='%Y-%m-%d %H:%M:%S')
