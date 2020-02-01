@@ -5,7 +5,7 @@ from google_drive_downloader import GoogleDriveDownloader as gdd
 
 DATA = {
     "mf_aglomerated.csv": "1CA-bTDqXY5-1RpFEjdD0t5EhNZbsnsc-",
-    "meteo_stations.csv":"1nqrH3_6Jlxd0xY7clMUHDIJaeR7pEMY9",
+    "meteo_stations.csv":"1BToFaA-ajwSnQd_u3wbuMhajgyeha-N2",
     "synop.csv":"1GTdcZdyCbVWPN2GNNJzuJ8CvRgQBBkv8",
     "forests.json":"1vZPbKjY2Sve3RpHcRftJdEywRetSyqE0"
 }

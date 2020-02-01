@@ -5,13 +5,13 @@ import pandas as pd
 import rampwf as rw
 from rampwf.score_types.base import BaseScoreType
 from rampwf.workflows import FeatureExtractorRegressor
-from sklearn.model_selection import KFold
+from sklearn.model_selection import StratifiedKFold
 
 problem_title = 'Prediction of the surface burned by wildfires in the south of France'
 _target_column_name = 'Area'
+
 # A type (class) which will be used to create wrapper objects for y_pred
 Predictions = rw.prediction_types.make_regression()
-
 
 # An object implementing the workflow
 
@@ -22,9 +22,6 @@ class WFA(FeatureExtractorRegressor):
 
 
 workflow = WFA()
-
-
-# TODO: define the score (specific score for the WFA problem)
 
 class WFA_error(BaseScoreType):
     is_lower_the_better = True
@@ -41,26 +38,23 @@ class WFA_error(BaseScoreType):
             y_true = y_true.values
 
         alpha = 0.7
-        p = 2
 
-        losses = 2*(alpha+(1-2*alpha)*(1*((np.log(y_true)-np.log(y_pred)) < 0)))*((np.log(y_true)-np.log(y_pred))**p)
+        losses = 2*(alpha+(1-2*alpha)*(1*((np.log(y_true)-np.log(y_pred)) < 0)))*((np.log(y_true)-np.log(y_pred))**2)
 
-        loss = np.mean(losses)
+        loss = np.sqrt(np.mean(losses))
 
         return loss
 
-
 score_types = [
     WFA_error(name='wfa error', precision=3),
-    rw.score_types.RMSE(name='RMSE'),
-    rw.score_types.RelativeRMSE(name='Relative RMSE'),
-    rw.score_types.NormalizedRMSE(name='Normalized RMSE'),
 ]
 
 
 def get_cv(X, y):
-    cv = KFold(n_splits=5, shuffle=False)
-    return cv.split(X, y)
+    bins = np.linspace(0,np.log(116000000),25)
+    y_binned = np.digitize(np.log(y),bins)
+    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=21)
+    return cv.split(X, y_binned)
 
 
 def _read_data(path, f_name):
