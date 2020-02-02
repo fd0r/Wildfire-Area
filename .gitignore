@@ -9,3 +9,7 @@ data/fires_with_meteo_full_one.csv
 data/liste_incendies_ du_10_01_2020.csv
 data/synop_aglomerated.csv
 data/.DS_Store
+data/meteo_stations.csv
+data/synop.csv
+data/mf_aglomerated.csv
+data/forests.json
