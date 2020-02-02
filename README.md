@@ -12,8 +12,15 @@ This starting kit obviously requires python, but also needs some libraries:
 
 - pandas
 - numpy
+- scipy
 - matplotlib
 - scikit-learn
+- geopandas
+- shapely
+- jupyter
+- googledrivedownloader
+
+If you need to install some of them, you can simply execute ```pip install -r requirements.txt``` on your terminal.
 
 ## Environment
 
@@ -22,6 +29,10 @@ You will need to install the ramp workflow library. If it is not already done, t
 pip install git+https://github.com/paris-saclay-cds/ramp-workflow.git
 ```
 Then, follow the [ramp-kits instruction](https://github.com/paris-saclay-cds/ramp-workflow/wiki/Getting-started-with-a-ramp-kit).
+
+## Quickstart
+
+You can start the challenge by looking at the `WFA_starting_kit.ipynb` notebook!
 
 ## Local submissions
 

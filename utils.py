@@ -1,9 +1,5 @@
-import geopandas as gpd
-import pandas as pd
-import pyproj
-from pyproj import Proj
-from shapely.ops import transform
-from functools import partial
+from pyproj import Proj, transform
+
 
 def dfci_to_lambert(dfci_coordinates):
     # Transforms a DFCI square coordinate to the Lambert zone II coordinates of its center
@@ -52,35 +48,5 @@ def dfci_to_wgs(dfci_coordinates):
     inProj = Proj('epsg:27572')
     outProj = Proj('epsg:4326')
     lamb_x,lamb_y = dfci_to_lambert(dfci_coordinates)
-    lat,lon = pyproj.transform(inProj,outProj,lamb_x,lamb_y)
+    lat,lon = transform(inProj,outProj,lamb_x,lamb_y)
     return (lat,lon)
-
-def reduce_forest_data(path_forests, path_fires, new_path, new_format='GeoJSON'):
-    # Writes a reduced version of the forest geojson data which only contains forests in the same departements
-    # as those in which we have fires
-    forests = gpd.read_file(path_forests)
-    fires = pd.read_csv(path_fires, sep=';',  skiprows=2)
-
-    dep_of_interest = fires['Département'].unique()
-
-    forests_of_interest = forests[forests['cinse_dep'].isin(dep_of_interest)]
-
-    south_east_forests.to_file(new_path, driver=new_format)
-
-
-def compute_forest_area(forests_shapes):
-    # Compute the area in square meters for the forest shapes passed as argument
-    areas = []
-    proj = partial(pyproj.transform, Proj('epsg:4326'), Proj('epsg:3857'))
-    for shape in forests_shapes:
-        new_shape = transform(proj, shape)
-        areas.append(new_shape.area)
-    return areas
-
-def add_forest_areas(path_forests, new_path, new_format='GeoJSON'):
-    # Adds a column containing the forests areas and writes it in a new file
-    forests = gpd.read_file(path_forests)
-
-    forests['area'] = compute_forest_area(forests['geometry'])
-
-    forests.to_file(new_path, driver=new_format)
