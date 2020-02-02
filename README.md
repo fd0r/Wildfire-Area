@@ -30,6 +30,10 @@ pip install git+https://github.com/paris-saclay-cds/ramp-workflow.git
 ```
 Then, follow the [ramp-kits instruction](https://github.com/paris-saclay-cds/ramp-workflow/wiki/Getting-started-with-a-ramp-kit).
 
+## Quickstart
+
+You can start the challenge by looking at the `WFA_starting_kit.ipynb` notebook!
+
 ## Local submissions
 
 To test a submission, named __my_sub__ for example, the `submissions` folder should contain another folder named __my_sub__, containing 2 scripts python, `feature_extractor.py` and `regressor.py`. Then, you can execute the following command line:
