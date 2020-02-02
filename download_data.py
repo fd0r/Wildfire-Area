@@ -11,6 +11,7 @@ DATA = {
     "stations.csv":"1jlak9wlSAiyQW6MXOKOoOIMg8GV_nyFD"
 }
 
+
 def main(output_dir='data'):
     filenames = DATA
     if not os.path.exists(output_dir):
