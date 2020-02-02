@@ -21,10 +21,10 @@ def main(output_dir='data'):
             continue
         gdd.download_file_from_google_drive(file_id=file_id,
                                             dest_path=output_file)
-        if os.path.exists(os.path.join('submissions', 'starting_kit')):
+        if os.path.exists(os.path.join('submissions', 'merge_naive')):
             copyfile(
                 output_file,
-                os.path.join('submissions', 'starting_kit', file_name)
+                os.path.join('submissions', 'merge_naive', file_name)
             )
 
 
