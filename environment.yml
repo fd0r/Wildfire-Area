@@ -1,8 +1,10 @@
-name: FAN
+name: WAF
 channels:
   - conda-forge
 dependencies:
   - scipy
+  - geopandas
+  - shapely
   - numpy
   - pandas
   - matplotlib
